@@ -238,21 +238,27 @@ There are two lifecycle modes: **SDK-owned** and **developer-owned**.
     <ol>
       <li>
         <span aria-hidden="true">1</span>
-        <p>
+        <span class="sandbox-lifecycle-step">
           Pass <code>sandbox.client</code>.
-        </p>
+        </span>
       </li>
       <li>
         <span aria-hidden="true">2</span>
-        <p>Runner creates or resumes a sandbox session.</p>
+        <span class="sandbox-lifecycle-step">
+          Runner creates or resumes a sandbox session.
+        </span>
       </li>
       <li>
         <span aria-hidden="true">3</span>
-        <p>Agent runs and snapshot-backed workspace state can persist.</p>
+        <span class="sandbox-lifecycle-step">
+          Agent runs and snapshot-backed workspace state can persist.
+        </span>
       </li>
       <li>
         <span aria-hidden="true">4</span>
-        <p>Runner closes runner-owned resources.</p>
+        <span class="sandbox-lifecycle-step">
+          Runner closes runner-owned resources.
+        </span>
       </li>
     </ol>
   </section>
@@ -264,23 +270,27 @@ There are two lifecycle modes: **SDK-owned** and **developer-owned**.
     <ol>
       <li>
         <span aria-hidden="true">1</span>
-        <p>
+        <span class="sandbox-lifecycle-step">
           Create a <code>session</code>.
-        </p>
+        </span>
       </li>
       <li>
         <span aria-hidden="true">2</span>
-        <p>
+        <span class="sandbox-lifecycle-step">
           Pass <code>sandbox.session</code> into the run.
-        </p>
+        </span>
       </li>
       <li>
         <span aria-hidden="true">3</span>
-        <p>Agent uses the existing workspace.</p>
+        <span class="sandbox-lifecycle-step">
+          Agent uses the existing workspace.
+        </span>
       </li>
       <li>
         <span aria-hidden="true">4</span>
-        <p>Inspect, reuse, then close the session yourself.</p>
+        <span class="sandbox-lifecycle-step">
+          Inspect, reuse, then close the session yourself.
+        </span>
       </li>
     </ol>
   </section>

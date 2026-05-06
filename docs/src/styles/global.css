@@ -550,9 +550,10 @@
       align-items: start;
       display: flex;
       gap: 0.65rem;
+      text-align: start;
     }
 
-    li > span {
+    li > span[aria-hidden='true'] {
       align-items: center;
       background: var(--openai-code-background);
       border: 1px solid var(--openai-code-border-color);
@@ -567,13 +568,20 @@
       width: 1.45rem;
     }
 
-    p {
+    .sandbox-lifecycle-step {
       color: var(--openai-gray-2);
+      display: block;
       flex: 1 1 auto;
       font-size: var(--sl-text-xs);
       line-height: 1.4;
       margin: 0;
       min-width: 0;
+      text-align: start;
+
+      p {
+        margin: 0;
+        text-align: start;
+      }
     }
   }
 
