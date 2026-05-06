@@ -36,15 +36,13 @@ If you use interactive local PTY sessions with `tty: true`, the process running 
 
 ## Create a local sandbox agent
 
-This example stages a local repo under `repo/`, loads local skills lazily, and lets the runner create a Unix-local sandbox session for the run.
+This example stages a local repo under `repo/`, loads local skills lazily, and lets the runner create a Unix-local sandbox session for the run. The agent definition owns the manifest and capabilities, while the run config only chooses the sandbox client for this run.
 
 <Code
   lang="typescript"
   code={basicExample}
   title="Create a local sandbox agent"
 />
-
-The example is intentionally shaped like the Python SDK quickstart: the agent definition owns the manifest and capabilities, while the run config only chooses the sandbox client for this run.
 
 ## Key choices
 

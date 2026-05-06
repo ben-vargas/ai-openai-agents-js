@@ -10,7 +10,7 @@ import generateMemoryExample from '../../../../../../examples/docs/sandbox-agent
 import memoryLayoutsExample from '../../../../../../examples/docs/sandbox-agents/memory-layouts.ts?raw';
 import readOnlyMemoryExample from '../../../../../../examples/docs/sandbox-agents/read-only-memory.ts?raw';
 
-Memory lets future sandbox-agent runs learn from prior runs. It is separate from the SDK's conversational [Session](/openai-agents-js/guides/sessions) memory, which stores message history. Memory distills lessons from prior runs into files in the sandbox workspace.
+Memory lets future sandbox-agent runs learn from prior runs. It is separate from the SDK's conversational [Session](/openai-agents-js/guides/sessions) memory, which stores message history. Memory distills lessons from prior runs into files in the sandbox workspace, so treat generated memory artifacts as retained data and apply the same sensitivity and retention policy you use for the workspace.
 
 <Aside type="caution" title="Beta feature">
   Sandbox agents are in beta. API details, defaults, and supported capabilities

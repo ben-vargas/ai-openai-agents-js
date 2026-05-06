@@ -24,7 +24,7 @@ You define the workspace around the data the agent needs. It can start from GitH
   <img src={harnessWithCompute.src} alt="Sandbox agent harness with compute" />
 </figure>
 
-`SandboxAgent` is still an `Agent`. It keeps the usual agent surface such as `instructions`, `tools`, `handoffs`, `mcpServers`, `modelSettings`, output types, guardrails, and hooks, and it still runs through the normal `run()` and `Runner` APIs. What changes is the execution boundary:
+`SandboxAgent` extends `Agent`, so it is still an `Agent`. It keeps the usual agent surface such as `instructions`, `tools`, `handoffs`, `mcpServers`, `modelSettings`, output types, guardrails, and hooks, and it still runs through the normal `run()` and `Runner` APIs. What changes is the execution boundary:
 
 - `SandboxAgent` defines the agent itself: the usual agent configuration plus sandbox-specific defaults like `defaultManifest`, `baseInstructions`, `runAs`, and capabilities such as filesystem tools, shell access, skills, memory, or compaction.
 - `Manifest` declares the desired starting contents and layout for a fresh sandbox workspace, including files, repos, mounts, and environment.
@@ -32,7 +32,7 @@ You define the workspace around the data the agent needs. It can start from GitH
 - The `sandbox` run option decides how the run gets that sandbox session, for example by injecting one directly, reconnecting from serialized sandbox session state, or creating a fresh sandbox session through a sandbox client.
 - Saved sandbox state and snapshots let later runs reconnect to prior work or seed a fresh sandbox session from saved contents.
 
-`Manifest` is the fresh-session workspace contract, not the full source of truth for every live sandbox. The effective workspace for a run can instead come from a reused sandbox session, serialized sandbox session state, or a snapshot chosen at run time.
+`Manifest` defines the starting contents for a new sandbox workspace. It does not describe the current files in every live sandbox, because reused sessions, serialized session state, and snapshots can all provide or change the workspace at run time.
 
 Throughout this page, "sandbox session" means the live execution environment managed by a sandbox client. The exact boundary depends on the client: Unix-local sessions run in a local workspace on the host, while Docker and hosted clients provide stronger environment isolation. This is different from the SDK's conversational `Session` interfaces described in [Sessions](/openai-agents-js/guides/sessions).
 
@@ -63,7 +63,7 @@ A sandbox run combines an agent definition with per-run sandbox configuration. T
   <span aria-hidden="true">→</span>
   <div>
     <strong>Saved state</strong>
-    <span>Resume or fresh-start later</span>
+    <span>Resume later or seed a fresh workspace</span>
   </div>
 </div>
 
@@ -71,7 +71,7 @@ Sandbox-specific defaults stay on `SandboxAgent`. Per-run sandbox-session choice
 
 Think about the lifecycle in three phases:
 
-1. Define the agent and the fresh-workspace contract with `SandboxAgent`, `Manifest`, and capabilities.
+1. Define the agent and starting workspace contents with `SandboxAgent`, `Manifest`, and capabilities.
 2. Execute a run by giving `run()` or `Runner` a `sandbox` run option that injects, resumes, or creates the sandbox session.
 3. Continue later from runner-managed `RunState`, explicit sandbox `sessionState`, or a saved workspace snapshot.
 
@@ -81,11 +81,11 @@ If shell access is only one occasional tool, start with hosted shell in the [Too
 
 Sandbox agents are a good fit for workspace-centric workflows, for example:
 
-- coding and debugging, for example orchestrating automated fixes for issue reports in a GitHub repo and running targeted tests.
-- document processing and editing, for example extracting information from a user's financial documents and creating a completed tax-form draft.
-- file-grounded review or analysis, for example checking onboarding packets, generated reports, or artifact bundles before answering.
-- isolated multi-agent patterns, for example giving each reviewer or coding sub-agent its own workspace.
-- multi-step workspace tasks, for example fixing a bug in one run and adding a regression test later, or resuming from snapshot or sandbox session state.
+- **Coding and debugging**: orchestrate automated fixes for issue reports in a GitHub repo and run targeted tests.
+- **Document processing and editing**: extract information from a user's financial documents and create a completed tax-form draft.
+- **File-grounded review or analysis**: check onboarding packets, generated reports, or artifact bundles before answering.
+- **Isolated multi-agent patterns**: give each reviewer or coding sub-agent its own workspace.
+- **Multi-step workspace tasks**: fix a bug in one run and add a regression test later, or resume from snapshot or sandbox session state.
 
 If you do not need access to files or a living filesystem, keep using `Agent`. If shell access is just one occasional capability, add hosted shell; if the workspace boundary itself is part of the feature, use sandbox agents.
 

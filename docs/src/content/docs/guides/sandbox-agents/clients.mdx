@@ -122,7 +122,7 @@ Backend support is intentionally explicit:
 | --- | --- |
 | `UnixLocalSandboxClient` | Supports local bind-style mounts through the local workspace model. |
 | `DockerSandboxClient` | Supports local bind mounts and Docker volume-style strategies where Docker can attach the storage. |
-| Hosted providers | Provider-specific strategies live with provider implementations and should be documented with those provider branches or extension packages. |
+| Hosted providers | Provider-specific strategies live with each provider implementation. Check that provider's docs for supported mounts and required setup. |
 
 Do not assume a mount entry works on every backend. If a client cannot enforce manifest metadata, identity, or mount behavior, it should fail early instead of silently ignoring that part of the manifest.
 
@@ -130,9 +130,9 @@ Do not assume a mount entry works on every backend. If a client cannot enforce m
 
 When you need a hosted environment, the same `SandboxAgent` definition usually carries over and only the sandbox client changes in the `sandbox` run option.
 
-Hosted provider implementations live in `@openai/agents-extensions` provider subpaths. Provider-specific docs and examples should add exact environment variable notes, runnable examples, port behavior, PTY support, snapshot behavior, and cleanup behavior alongside the provider code.
+Hosted provider implementations are available from `@openai/agents-extensions` provider subpaths. Check the provider's docs for exact environment variables, runnable examples, port behavior, PTY support, snapshot behavior, and cleanup behavior.
 
-The TypeScript hosted clients are expected to live in `@openai/agents-extensions` provider subpaths, matching the provider branches. Install `@openai/agents-extensions` and satisfy its package-level peers; each provider may also require a provider SDK package or backend setup:
+Install `@openai/agents-extensions` and satisfy its package-level peers. Each provider may also require a provider SDK package or backend setup:
 
 | Client | Import path | Provider requirement |
 | --- | --- | --- |
@@ -199,4 +199,4 @@ Declare the ports in the client options when you need a backend to enforce an al
 
 Local PTY support uses a small Python 3 bridge in the SDK process. The bridge is only used for `tty: true` sessions, where Node.js does not provide a built-in PTY API and the SDK needs standard POSIX PTY behavior for interactive stdin, signal handling, and exit status reporting. Install `python3` in the environment that runs your SDK code, or set `OPENAI_AGENTS_PYTHON` to a Python 3 executable. This is separate from the Python version, if any, installed inside a Docker sandbox image.
 
-Hosted provider support varies by provider. Keep provider-specific docs close to the provider implementation so users can see exact options, environment variables, port behavior, PTY support, snapshot behavior, and cleanup behavior.
+Hosted provider support varies by provider. Check the provider-specific docs for exact options, environment variables, port behavior, PTY support, snapshot behavior, and cleanup behavior.

@@ -548,9 +548,8 @@
 
     li {
       align-items: start;
-      display: grid;
+      display: flex;
       gap: 0.65rem;
-      grid-template-columns: auto 1fr;
     }
 
     li > span {
@@ -560,6 +559,7 @@
       border-radius: 999px;
       color: var(--openai-gray-2);
       display: inline-flex;
+      flex: 0 0 1.45rem;
       font-size: var(--sl-text-2xs);
       height: 1.45rem;
       justify-content: center;
@@ -569,9 +569,11 @@
 
     p {
       color: var(--openai-gray-2);
+      flex: 1 1 auto;
       font-size: var(--sl-text-xs);
       line-height: 1.4;
       margin: 0;
+      min-width: 0;
     }
   }
 
