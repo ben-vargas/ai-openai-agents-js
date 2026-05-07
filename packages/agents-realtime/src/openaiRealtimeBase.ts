@@ -1,4 +1,5 @@
 import { RuntimeEventEmitter, Usage } from '@openai/agents-core';
+import { normalizeHostedMcpRequireApproval } from '@openai/agents-core/utils';
 import type { MessageEvent as WebSocketMessageEvent } from 'ws';
 
 import {
@@ -635,7 +636,10 @@ export abstract class OpenAIRealtimeBase
             authorization: tool.authorization,
             headers: tool.headers,
             allowed_tools: tool.allowed_tools,
-            require_approval: tool.require_approval,
+            require_approval:
+              typeof tool.require_approval === 'undefined'
+                ? undefined
+                : normalizeHostedMcpRequireApproval(tool.require_approval),
           });
         }
 

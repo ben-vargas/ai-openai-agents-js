@@ -188,6 +188,60 @@ describe('OpenAIRealtimeBase helpers', () => {
     ]);
   });
 
+  it('omits mcp require_approval when realtime config leaves it undefined', () => {
+    const base = new TestBase();
+    const payload = (base as any)._getMergedSessionConfig({
+      instructions: 'hi',
+      model: 'gpt-realtime-1.5',
+      tools: [
+        {
+          type: 'mcp',
+          server_label: 'deepwiki',
+          server_url: 'https://mcp.deepwiki.com/sse',
+        },
+      ],
+    });
+
+    expect(payload.tools).toEqual([
+      {
+        type: 'mcp',
+        server_label: 'deepwiki',
+        server_url: 'https://mcp.deepwiki.com/sse',
+      },
+    ]);
+  });
+
+  it('preserves mcp require_approval read_only filters in realtime config', () => {
+    const base = new TestBase();
+    const payload = (base as any)._getMergedSessionConfig({
+      instructions: 'hi',
+      model: 'gpt-realtime-1.5',
+      tools: [
+        {
+          type: 'mcp',
+          server_label: 'deepwiki',
+          server_url: 'https://mcp.deepwiki.com/sse',
+          require_approval: {
+            always: { read_only: false },
+            never: { tool_names: ['search'], read_only: true },
+          },
+        },
+      ],
+    });
+
+    expect(payload.tools).toEqual([
+      {
+        type: 'mcp',
+        server_label: 'deepwiki',
+        server_url: 'https://mcp.deepwiki.com/sse',
+        require_approval: {
+          always: { read_only: false },
+          never: { tool_names: ['search'], read_only: true },
+        },
+      },
+    ]);
+  });
+
   it('sendFunctionCallOutput emits item_update and response.create', () => {
     const base = new TestBase();
     const updates: any[] = [];
